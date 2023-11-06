@@ -40,4 +40,12 @@ public class Prompts {
             return "Gracz 2, twoja kolej.";
         }
     }
+
+    public String word(String language) {
+        if (language.equals(english)) {
+            return "Word: ";
+        } else {
+            return "Słowo: ";
+        }
+    }
 }
