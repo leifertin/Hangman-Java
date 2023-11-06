@@ -49,15 +49,8 @@ public class Hangman {
             }
 
             printWordState(word, player_guesses);
-            String guess = getPlayerGuess(user_input, player_guesses, language);
+            wrong_count = getPlayerGuess(user_input, word, player_guesses, wrong_count, language);
 
-            if (word.toLowerCase().contains(guess)) {
-                System.out.println(respond.correctLetter(language));
-
-            } else {
-                wrong_count++;
-                System.out.println(respond.wrong(language));
-            }
 
             if (printWordState(word, player_guesses)) {
                 System.out.println(respond.win(word, language));
@@ -136,7 +129,7 @@ public class Hangman {
         return StandardCharsets.UTF_8.decode(buffer).toString();
     }
 
-    private static String getPlayerGuess(Scanner user_input, List<Character> player_guesses, String language) {
+    private static int getPlayerGuess(Scanner user_input, String word, List<Character> player_guesses, int wrong_count, String language) {
         Prompts prompt = new Prompts();
         Responses respond = new Responses();
 
@@ -148,10 +141,19 @@ public class Hangman {
         if (player_guesses.contains(letter_guess)) {
             System.out.println(respond.alreadyGuessed(letter_guess, language));
         } else {
+            if (word.toLowerCase().contains(letter_guess_line)) {
+                System.out.println(respond.correctLetter(language));
+
+            } else {
+                wrong_count++;
+                System.out.println(respond.wrong(language));
+            }
             player_guesses.add(letter_guess_line.toLowerCase().charAt(0));
         }
 
-        return letter_guess_line;
+        return wrong_count;
+
+        //return letter_guess_line;
     }
 
     private static void printHangman(Integer wrong_count, List<String> hangman_body_full) {
