@@ -6,11 +6,6 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.List;
-import java.nio.charset.StandardCharsets.*;
-
-import static java.nio.charset.StandardCharsets.ISO_8859_1;
-import static java.nio.charset.StandardCharsets.UTF_8;
-
 
 public class Hangman {
     public static void main(String[] args) throws FileNotFoundException {
@@ -47,16 +42,14 @@ public class Hangman {
         while (wrong_count < guesses_allowed + 1) {
 
             printHangman(wrong_count, hangman_body_full);
-            String word_lowercase = word.toLowerCase();
 
             if (wrong_count == 6) {
                 System.out.println(respond.lose(word, language));
                 break;
             }
 
-
             printWordState(word, player_guesses);
-            String guess = getPlayerGuess(user_input, word_lowercase, player_guesses, language);
+            String guess = getPlayerGuess(user_input, player_guesses, language);
 
             if (word.toLowerCase().contains(guess)) {
                 System.out.println(respond.correctLetter(language));
@@ -143,7 +136,7 @@ public class Hangman {
         return StandardCharsets.UTF_8.decode(buffer).toString();
     }
 
-    private static String getPlayerGuess(Scanner user_input, String word, List<Character> player_guesses, String language) {
+    private static String getPlayerGuess(Scanner user_input, List<Character> player_guesses, String language) {
         Prompts prompt = new Prompts();
         Responses respond = new Responses();
 
